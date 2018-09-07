@@ -37,7 +37,9 @@ public class ScrapsToSnacksMain {
 		get("/search/recipes", (rq, rs) -> new ModelAndView(map, "searchRecipes.mustache"), new MustacheTemplateEngine());
 
 		get("/display", (rq, rs) -> new ModelAndView(map, "display.mustache"), new MustacheTemplateEngine());
-		
+	
+		get("/form/recipe", (rp, rs) -> new ModelAndView(map, "addRecipe.mustache"), new MustacheTemplateEngine());
+			
 	}
 	
     static int getHerokuAssignedPort() {

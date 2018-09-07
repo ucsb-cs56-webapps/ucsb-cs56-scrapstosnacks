@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+{{> head }}
+<body>
+ {{> nav }}
+ <h1>Recipe Form</h1>
+
+<form action="/display" method="post">
+  Recipe Name:<br>
+  <input type="text" name="firstname" value="ex: Chicken and Rice">
+  <br> <br> <br>
+  Ingredient 1: <br>
+  <input type="text" name="lastname" value="Amount">
+  <input type="text" name="lastname" value="Ingredient">
+  <br><br>
+  Ingredient 2: <br>
+  <input type="text" name="lastname" value="Amount">
+  <input type="text" name="lastname" value="Ingredient">
+  <br><br>
+  Ingredient 3: <br>
+  <input type="text" name="lastname" value="Amount">
+  <input type="text" name="lastname" value="Ingredient">
+  <br><br>
+  Ingredient 4: <br>
+  <input type="text" name="lastname" value="Amount">
+  <input type="text" name="lastname" value="Ingredient">
+  <br><br>
+  Ingredient 5: <br>
+  <input type="text" name="lastname" value="Amount">
+  <input type="text" name="lastname" value="Ingredient">
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+<p>If you click the "Submit" button, the form-data will be sent to a page called "/display".</p>
+
+
+ {{> bootstrap-from-cdn-body }}
+</body>
+</html>
