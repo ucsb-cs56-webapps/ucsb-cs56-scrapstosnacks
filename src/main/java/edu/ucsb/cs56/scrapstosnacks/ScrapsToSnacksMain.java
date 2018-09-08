@@ -21,10 +21,10 @@ import static spark.Spark.post;
 
 public class ScrapsToSnacksMain {
 
+
 	public static final String CLASSNAME="ScrapsToSnacksMain";
 	
 	public static final Logger log = Logger.getLogger(CLASSNAME);
-
 	public static void main(String[] args) {
 
         port(getHerokuAssignedPort());
@@ -37,16 +37,27 @@ public class ScrapsToSnacksMain {
 		get("/search/recipes", (rq, rs) -> new ModelAndView(map, "searchRecipes.mustache"), new MustacheTemplateEngine());
 
 		get("/display", (rq, rs) -> new ModelAndView(map, "display.mustache"), new MustacheTemplateEngine());
-		
+		get("/submitted", (rq, rs) ->{
+					HashMap model = new HashMap();
+				model.put("recipename", rq.queryParams("recipename"));
+				String a = "amount";
+				String i = "ingredient";
+				int num = 5;
+				for (int j = 0; j < num; j++) {
+				String a_t = a+(j+1);
+				String i_t = i+(j+1);
+				model.put(a_t, rq.queryParams(a_t));
+				model.put(i_t, rq.queryParams(i_t));
+				}
+			       	return new ModelAndView(model, "submitted_ingredients.mustache");}, new MustacheTemplateEngine());
+		get("/form/recipe",(rp,rs) ->new ModelAndView(map, "addRecipe.mustache"), new MustacheTemplateEngine());	
+	
 	}
-	
-    static int getHerokuAssignedPort() {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        if (processBuilder.environment().get("PORT") != null) {
-            return Integer.parseInt(processBuilder.environment().get("PORT"));
-        }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-    }
-
-	
-}
+	public static int getHerokuAssignedPort() {
+        	ProcessBuilder processBuilder = new ProcessBuilder();
+        	if (processBuilder.environment().get("PORT") != null) {
+            	return Integer.parseInt(processBuilder.environment().get("PORT"));
+        	}
+        	return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    	}
+}	
