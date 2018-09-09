@@ -48,7 +48,7 @@ public class ScrapsToSnacksMain {
 				String i_t = i+(j+1);
 				model.put(a_t, rq.queryParams(a_t));
 				model.put(i_t, rq.queryParams(i_t));
-				MongoDBDemo01.getForm(rq.queryParams(i_t));
+		//		MongoDBDemo01.getForm(rq.queryParams(i_t));
 				}
 			       	return new ModelAndView(model, "submitted_ingredients.mustache");}, new MustacheTemplateEngine());
 		get("/form/recipe",(rp,rs) ->new ModelAndView(map, "addRecipe.mustache"), new MustacheTemplateEngine());	
