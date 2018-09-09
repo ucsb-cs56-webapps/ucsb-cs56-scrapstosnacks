@@ -71,7 +71,14 @@
       <artifactId>spark-core</artifactId>
       <version>2.5</version>
     </dependency>
-    
+
+    <!-- JSON -->
+    <dependency>
+       <groupId>org.json</groupId>
+       <artifactId>json</artifactId>
+       <version>20150729</version>
+    </dependency>
+
   </dependencies>
 
   <!-- For use with github pages, to publish the site to the /docs subdirectory -->

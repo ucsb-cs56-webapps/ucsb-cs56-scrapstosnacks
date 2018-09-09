@@ -43,7 +43,7 @@ import java.util.List;
  *
  */
 
-public class MongoDBDemo01 {
+public class MongoDB {
 
   /**
        return a HashMap with values of all the environment variables
