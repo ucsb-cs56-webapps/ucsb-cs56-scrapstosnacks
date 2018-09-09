@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.pconrad;
+package edu.ucsb.cs56.scrapstosnacks;
 
 /*
  * Some portions:
@@ -50,7 +50,7 @@ public class MongoDBDemo01 {
        listed; print error message for each missing one, and exit if any
        of them is not defined.
     */
-    
+   public static ArrayList<String> ingredients = new ArrayList<String>();
     public static HashMap<String,String> getNeededEnvVars(String [] neededEnvVars) {
 
         ProcessBuilder processBuilder = new ProcessBuilder();
@@ -135,14 +135,27 @@ public class MongoDBDemo01 {
         return resultString;
     }
 
+	public static void getForm(String s) {
+		ingredients.add(s);
+	}
+
+
     public static ArrayList<String> createDocument(String uriString) throws UnknownHostException {
 		
         // Create seed data
-        
+        Recipe re = new Recipe();
+	String name = "";
+	for(String s:ingredients)
+	{
+		Ingredient temp = new Ingredient(1,s);
+		re.add(temp);
+		name += s;
+	}
+	re.set_name(name);
         List<Document> seedData = new ArrayList<Document>();
 		
-        seedData.add(new Document("decade", "1970s")
-					 .append("artist", "Debby Boone")
+        seedData.add(new Document("recipe_name", re.get_name())
+					 .append("ingredient1", "Deb")
 					 .append("song", "You Light Up My Life")
 					 .append("weeksAtOne", 10)
 					 );
