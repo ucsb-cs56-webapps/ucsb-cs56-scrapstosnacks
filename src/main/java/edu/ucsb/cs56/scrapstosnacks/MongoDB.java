@@ -89,7 +89,7 @@ public class MongoDB {
 		return uriString;
 	}
 	
-    public static void main(String[] args) {
+ /*   public static void main(String[] args) {
 	
 		HashMap<String,String> envVars =  
 			getNeededEnvVars(new String []{
@@ -115,7 +115,7 @@ public class MongoDB {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-    }
+    }*/
 
     static ArrayList<String> initDatabase(String uriString) {
         ArrayList<String> dbQuery = new ArrayList<>();
@@ -153,84 +153,152 @@ public class MongoDB {
 	}
 	re.set_name(name);
         List<Document> seedData = new ArrayList<Document>();
-		
-        seedData.add(new Document("recipe_name", "dddd")
-					 .append("ingredient1", "Deb")
-					 .append("song", "You Light Up My Life")
-					 .append("weeksAtOne", 10)
+	ArrayList<String> a = new ArrayList<String>();
+       	a.add("chicken");
+	a.add("rice");	
+	a.add("soy_sauce");
+        seedData.add(new Document("recipename","Chicken and Rice" )
+					 .append("ingredient", a)
+					 .append("ready","y")
 					 );
-		
-        seedData.add(new Document("decade", "1980s")
-					 .append("artist", "Olivia Newton-John")
-					 .append("song", "Physical")
-					 .append("weeksAtOne", 10)
+	a.set(0,"beef");
+	a.set(1,"onion");
+	a.set(2,"pepper");
+        seedData.add(new Document("recipename", "beef soup")
+					 .append("ingredient", a)
+					 .append("ready","y")
 					 );
-		
-        seedData.add(new Document("decade", "1990s")
-					 .append("artist", "Mariah Carey")
-					 .append("song", "One Sweet Day")
-					 .append("weeksAtOne", 16)
+	a.set(0,"rice");
+	a.set(0,"egg");
+	a.set(0,"carrot");
+        seedData.add(new Document("recipename", "fried rice")
+					 .append("ingredient", a)
+					 .append("ready","y")
 					 );
-		
-        MongoClientURI uri  = new MongoClientURI(uriString); 
-        MongoClient client = new MongoClient(uri);
-        MongoDatabase db = client.getDatabase(uri.getDatabase());
-        
-        /*
-         * First we'll add a few songs. Nothing is required to create the
-         * songs collection; it is created automatically when we insert.
-         */
-        
-        MongoCollection<Document> songs = db.getCollection("songs");
-        
-        /*
-         *  Dropping the table right before the new setup. 
-         *  This way you can see the changes on mLab, wihtout duplicates.
-         */
-		
-        songs.drop();
-		
-        // Note that the insert method can take either an array or a document.
-        
+
+        MongoDatabase db = connect_database(uriString); //get database access
+        MongoCollection<Document> songs = db.getCollection("recipes");
+//        songs.drop();
         songs.insertMany(seedData);
-		
-        /*
-         * Then we need to give Boyz II Men credit for their contribution to
-         * the hit "One Sweet Day".
-         */
-		
-        Document updateQuery = new Document("song", "One Sweet Day");
-        songs.updateOne(updateQuery, new Document("$set", new Document("artist", "Mariah Carey ft. Boyz II Men")));
-        
-        /*
-         * Finally we run a query which returns all the hits that spent 10 
-         * or more weeks at number 1.
-         */
-		
-        Document findQuery = new Document("weeksAtOne", new Document("$gte",10));
-        Document orderBy = new Document("decade", 1);
-		
-        MongoCursor<Document> cursor = songs.find(findQuery).sort(orderBy).iterator();
-        
+        Document findQuery = new Document("ready", "y");
+        MongoCursor<Document> cursor = songs.find(findQuery).iterator();
         ArrayList<String> prettyQuery = new ArrayList<>();
-        
         try {
-            while (cursor.hasNext()) {
-                Document doc = cursor.next();
-                String currSong = "In the " + doc.get("decade") + ", " + doc.get("song") + 
-                    " by " + doc.get("artist") + " topped the charts for " + 
-                    doc.get("weeksAtOne") + " straight weeks.";
-                prettyQuery.add(currSong);
+                while (cursor.hasNext()) 
+		{
+               		Document doc = cursor.next();
+			String recipe = "The recipe is: "+ doc.get("recipename");
+			for(String s:(ArrayList<String>)(doc.get("ingredient")))
+			{
+				recipe += "Ingredient: ";
+				recipe += s;
+			}
+			prettyQuery.add(recipe);
+		}
             }
-        } finally {
+        finally 
+	{
             cursor.close();
         }
         
         // Only close the connection when your app is terminating
         
-        client.close();
+     //   client.close();
+	disconnect_database(uriString);
 		
         return prettyQuery;
     }
+    public static MongoDatabase connect_database(String uriString)
+    {
+        MongoClientURI uri  = new MongoClientURI(uriString); 
+        MongoClient client = new MongoClient(uri);
+        MongoDatabase db = client.getDatabase(uri.getDatabase());
+	return db;
+    }
+    public static void disconnect_database(String uriString)
+    {
+	MongoClientURI uri  = new MongoClientURI(uriString); 
+        MongoClient client = new MongoClient(uri);
+	client.close();
+    }
+    public static void add_document(String uriString,Document a)
+    {
+	MongoDatabase db = MongoDB.connect_database(uriString);
+        MongoCollection<Document> songs = db.getCollection("recipes");
+	songs.insertOne(a);
+    }
+    public static Document createOne(ArrayList<String> t)
+    {
+	    ArrayList temp = new ArrayList();
+	    for(int i=1;i<t.size();i++)
+	    {
+		    temp.add(t.get(i));
+	    }
+	    return (new Document(
+			    "recipename",t.get(0))
+			    .append("ingredient",temp)
+			    .append("ready","y")
+			    );
+    }
+	    
 
+/*    public static void delete_document(String uriString, String recipe_name)
+    {
+	MongoDatabase db = MongoDB.connect_database(uriString);
+	MongoCollection<Document> songs = db.getCollection("recipes");
+	db.songs.deleteOne({"recipename : "+recipe_name});
+    }*/
+
+    public static ArrayList<String> display_all (String uriString)
+    {
+	MongoDatabase db = MongoDB.connect_database(uriString);
+	MongoCollection<Document> songs = db.getCollection("recipes");
+	Document findQuery = new Document("ready","y");
+	MongoCursor<Document> cursor = songs.find(findQuery).iterator();
+	ArrayList<String> result = new ArrayList<String>();
+        try 
+	{
+            	while (cursor.hasNext()) 
+		{
+               		Document doc = cursor.next();
+			String recipe = "The recipe is: "+ doc.get("recipename");
+			for(String s:(ArrayList<String>)(doc.get("ingredient")))
+			{
+				recipe += ("\nIngredient: " + s);
+			}
+			result.add(recipe);
+		}
+	}
+	finally
+		{
+    		cursor.close();
+		}
+	return result;
+    }
+    public static ArrayList<String> searchByName(String uriString,String recipe_name)
+    {
+	MongoDatabase db = MongoDB.connect_database(uriString);
+	MongoCollection<Document> songs = db.getCollection("recipes");
+	ArrayList<String> result = new ArrayList<String>();
+	Document findQuery = new Document("recipename",recipe_name);
+        MongoCursor<Document> cursor = songs.find(findQuery).iterator();
+        try 
+	{
+		while (cursor.hasNext()) 
+		{
+               		Document doc = cursor.next();
+			String recipe = "The recipe is: "+ doc.get("recipename");
+			for(String s:(ArrayList<String>)(doc.get("ingredient")))
+			{
+				recipe += ("\nIngredient: " + s);
+			}
+			result.add(recipe);
+		}
+	}
+	finally
+	{
+	    cursor.close();
+	}
+	return result;
+    }
 }

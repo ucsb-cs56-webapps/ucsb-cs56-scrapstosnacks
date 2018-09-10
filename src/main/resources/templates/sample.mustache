@@ -3,12 +3,10 @@
 {{> head }}
 <body>
  {{> nav }}
-<#list recipes as recipe>
-    <div>
-         <h3> ${recipe.title}</h3>
-         <div>${recipe.f2f_url}</div>
-    </div>
-</#list>
+ {{#recipes}}
+ {{.}}
+
+ {{/recipes}}
  {{> bootstrap-from-cdn-body }}
 </body>
 </html>

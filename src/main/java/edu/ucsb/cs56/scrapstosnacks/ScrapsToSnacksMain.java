@@ -48,6 +48,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
 import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class ScrapsToSnacksMain {
@@ -59,74 +61,34 @@ public class ScrapsToSnacksMain {
 	public static void main(String[] args) {
 
         port(getHerokuAssignedPort());
-		
-		Map map = new HashMap();
-		
-        // hello.mustache file is in resources/templates directory
-        get("/", (rq, rs) -> new ModelAndView(map, "main.mustache"), new MustacheTemplateEngine());
-
-	get("/search/recipes", (rq, rs) -> new ModelAndView(map, "searchRecipes.mustache"), new MustacheTemplateEngine());
-
-	get("/display", (rq, rs) -> new ModelAndView(map, "display.mustache"), new MustacheTemplateEngine());
-	get("/submitted", (rq, rs) ->{
-		HashMap model = new HashMap();
-		model.put("recipename", rq.queryParams("recipename"));
-		String a = "amount";
-		String i = "ingredient";
-		int num = 5;
-		for (int j = 0; j < num; j++) {
-			String a_t = a+(j+1);
-			String i_t = i+(j+1);
-			model.put(a_t, rq.queryParams(a_t));
-			model.put(i_t, rq.queryParams(i_t));
-			MongoDB.getForm(rq.queryParams(i_t));
-		}
-	       	return new ModelAndView(model, "submitted_ingredients.mustache");}, new MustacheTemplateEngine());
-		get("/form/recipe",(rq,rs) ->new ModelAndView(map, "addRecipe.mustache"), new MustacheTemplateEngine());	
-	
-
-
-
 	// initializing database
-                HashMap<String,String> envVars =
-                        MongoDB.getNeededEnvVars(new String []{
+        HashMap<String,String> envVars =
+		MongoDB.getNeededEnvVars(new String []{
                                         "MONGODB_USER",
                                         "MONGODB_PASS",
                                         "MONGODB_NAME",
                                         "MONGODB_HOST",
                                         "MONGODB_PORT"
                                 });
-
-                String uriString = MongoDB.mongoDBUri(envVars);
+	String uriString = MongoDB.mongoDBUri(envVars);
         ArrayList<String> dbText = MongoDB.initDatabase(uriString);
         final String displayText = MongoDB.makeString(dbText);
+	Views.home_view();	
+	Views.form_view();
+	Views.submitted_view(uriString);
+	Views.search_view(uriString);
+	Views.display_view(uriString);
+	Views.result_view_byName(uriString);
 
 
 
-/*
 
-	//trying to implement api
-	ArrayList<RecipeModel> cats = new ArrayList<>();
+/*	//trying to implement api
+	ArrayList<RecipeModel> recipes = new ArrayList<>();
 	get("/results", (req, res) -> {
-
-            StringWriter writer = new StringWriter();
-            try {
+		recipes.clear();
                 Map<String, Object> attributes = new HashMap<>();
-                attributes.put("recipes", cats);
-                Template resultsTemplate = cfg.getTemplate("results.ftl");
-                resultsTemplate.process(attributes, writer);
-            } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("results.ftl not found!");
-                Spark.halt(500);
-            }
-            return writer;
 
-        });
-	
-	
-	ArrayList<RecipeModel> reciepes = new ArrayList<>();
-	get("/sample", (rq,rs) -> {
 		//String key = System.getenv("F2F_KEY");
 		String urlString = "https://www.food2fork.com/api/search?key=83fab007b63aaf5344a8a877f54c2c5b";
 		
@@ -168,7 +130,7 @@ public class ScrapsToSnacksMain {
 			JSONObject json_recipe_recipe_id = (JSONObject) json_recipe.get("recipe_id");
 			JSONObject json_recipe_image_url = (JSONObject) json_recipe.get("image_url");
 			JSONObject json_recipe_social_rank = (JSONObject) json_recipe.get("social_rank");
-			JSONObject json_recipe_publisher_url = (JSONObject) json_pet.get("publisher_url");
+			JSONObject json_recipe_publisher_url = (JSONObject) json_recipe.get("publisher_url");
 
 			if (json_recipe_publisher.length() != 0) {
 			    recipe.publisher = json_recipe_publisher.get("$t").toString();
@@ -196,15 +158,12 @@ public class ScrapsToSnacksMain {
 			}
 			recipes.add(recipe);
 		    }
-		    
+		    attributes.put("recipes", recipes);
 	    	    for (RecipeModel r :recipes) {	
-			System.out.println("recipe name:" + r.title + "link: " + r.f2f_url);
+			//System.out.println("recipe name:" + r.title + "link: " + r.f2f_url);
 		    }
-	    	    
-		    return "";
-		});	    
-*/
-	}//end of main method
+		    return new ModelAndView(attributes, "sample.mustache");}, new MustacheTemplateEngine());
+*/	}
 	public static int getHerokuAssignedPort() {
         	ProcessBuilder processBuilder = new ProcessBuilder();
         	if (processBuilder.environment().get("PORT") != null) {

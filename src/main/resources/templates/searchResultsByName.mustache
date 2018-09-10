@@ -3,16 +3,13 @@
 {{> head }}
 <body>
  {{> nav }}
- <h1>All Recipes</h1>
-
- <p>
- {{#recipes}}<br>
- {{.}}
- {{/recipes}}<br>
- 
- </p>
-
-
+ <h1>Search Results BY Name:</h1>
+<p>
+{{#recipes}}
+{{.}}
+{{/recipes}}
+</p>
  {{> bootstrap-from-cdn-body }}
 </body>
 </html>
+
