@@ -3,9 +3,16 @@
 {{> head }}
 <body>
  {{> nav }}
- <h1>This is for searching the recipes, we need to add checkbox here</h1>
+ <h1>This is for searching the recipes, enter the name of recipe you want</h1>
 
-<p>Not implemented yet</p>
+<p>
+<form action="/result/byname" method="get">
+  Search by recipe name:<br>
+  <input type="text" name="recipename" value="Chicken and Rice">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+</p>
 
  {{> bootstrap-from-cdn-body }}
 </body>

@@ -11,7 +11,7 @@
   <groupId>edu.ucsb.cs56.scrapstosnacks</groupId>
   <artifactId>scrapstosnacks</artifactId>
   <version>1.0</version>
-  <url>https://github.com/Jianyuyu5666/ucsb-cs56-scrapstosnacks</url>
+  <url>https://github.com/rphammy/ucsb-cs56-scrapstosnacks</url>
   
   <!-- configure what mvn package produces -->
   
@@ -37,7 +37,12 @@
       <artifactId>spark-template-mustache</artifactId>
       <version>2.7.1</version>
     </dependency>
-
+<!-- MongoDB NoSQL Database -->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>3.8.1</version>
+    </dependency>
     <!-- log4j -->
     
     <dependency>
@@ -66,7 +71,14 @@
       <artifactId>spark-core</artifactId>
       <version>2.5</version>
     </dependency>
-    
+
+    <!-- JSON -->
+    <dependency>
+       <groupId>org.json</groupId>
+       <artifactId>json</artifactId>
+       <version>20150729</version>
+    </dependency>
+
   </dependencies>
 
   <!-- For use with github pages, to publish the site to the /docs subdirectory -->
