@@ -244,12 +244,13 @@ public class MongoDB {
 
     public static ArrayList<String> searchByIngredients(String uriString, String ingredients)
     {
-	    /*
+	    
 	    MongoDatabase db = MongoDB.connect_database(uriString);
 	    MongoCollection<Document> songs = db.getCollection("recipes");
 	    ArrayList<String> result = new ArrayList<String>();
-	    ArrayList<String> i = (ArrayList<String>)(Arrays.asList(ingredients.split(","))); //make an arraylist of strins of the ingredients
-	    Document findQuery = new Document("ingredients", i);
+	    ArrayList<String> i = new ArrayList<String>(); //make an arraylist of strings of the ingredients
+	    i = MongoDB.parse(ingredients);
+	    Document findQuery = new Document("ready", "y");
 	    MongoCursor<Document> cursor = songs.find(findQuery).iterator();
 	    try
 	    {
@@ -257,21 +258,42 @@ public class MongoDB {
 		    {
 			    Document doc = cursor.next();
 			    String recipe = "the recipe is: "+ doc.get("recipename");
-			for(String s:(ArrayList<String>)(doc.get("ingredient")))
+			    boolean match_recipe = false;
+			for(int k=0;k<i.size();k++)
 			{
-				recipe += ("\ningredient: " + s);
+				for(String s:(ArrayList<String>)(doc.get("ingredient")))
+				{
+					if((i.get(k).equals(s)))
+					{
+						match_recipe = true;	
+						break;
+					}
+				}
 			}
-			result.add(recipe);
-		}
-	}
+			if(match_recipe)
+			{
+				result.add(recipe);
+			}
+		    }	
+	    }
 	finally
 	{
 	    cursor.close();
 	}
 	return result;
-*/
-	    ArrayList<String> test = new ArrayList<String>("hello");
-	    return test;
+
+
+    }
+    public static ArrayList<String> parse(String s) 
+    {
+	ArrayList<String> temp = new ArrayList<String>();
+	String seperator = ",";
+    	while(s.length()>1)
+	{
+		temp.add(s.substring(0,s.indexOf(seperator)));
+		s = s.substring(s.indexOf(seperator)+1);	
+	}
+	return temp;
     }
 	    
 }
