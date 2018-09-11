@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+{{> head }}
+<body>
+ {{> nav }}
+ <h1>Search Results:</h1>
+<p>
+{{#recipes}}
+{{.}}
+{{/recipes}}
+</p>
+ {{> bootstrap-from-cdn-body }}
+</body>
+</html>
+

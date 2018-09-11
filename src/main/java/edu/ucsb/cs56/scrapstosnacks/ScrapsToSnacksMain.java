@@ -71,22 +71,19 @@ public class ScrapsToSnacksMain {
                                         "MONGODB_PORT"
                                 });
 	String uriString = MongoDB.mongoDBUri(envVars);
-        ArrayList<String> dbText = MongoDB.initDatabase(uriString);
-        final String displayText = MongoDB.makeString(dbText);
+	MongoDB.initDatabase(uriString);
 	Views.home_view();	
 	Views.form_view();
 	Views.submitted_view(uriString);
 	Views.search_view(uriString);
 	Views.display_view(uriString);
 	Views.result_view_byName(uriString);
+	Views.result_view_byIngredients(uriString);
 
-
-
-
-/*	//trying to implement api
-	ArrayList<RecipeModel> recipes = new ArrayList<>();
+	//trying to implement api
+	
+	ArrayList<RecipeModel> recipes = new ArrayList<>(); //create arraylist that holds the recipes
 	get("/results", (req, res) -> {
-		recipes.clear();
                 Map<String, Object> attributes = new HashMap<>();
 
 		//String key = System.getenv("F2F_KEY");
@@ -115,55 +112,34 @@ public class ScrapsToSnacksMain {
             	sc.close();
 		
 
-		//put stuff in json 
+		//create json object
 		JSONObject json = new JSONObject(inline);
-		json = (JSONObject) json.get("count");
 
+		json = (JSONObject) json.get("count"); 
+		
+		//get array of pets from the JSON.  iterate through and store in the model
 		JSONArray json_recipes = (JSONArray) json.get("recipes");
-		for (int i = 0; i < json_recipes.length(); i++) {
+		for (Object o : json_recipes) {
 			RecipeModel recipe = new RecipeModel();
-			JSONObject json_recipe = (JSONObject) json_recipes.get(i);
-			JSONObject json_recipe_publisher = (JSONObject) json_recipe.get("publisher");
-			JSONObject json_recipe_f2f_url = (JSONObject) json_recipe.get("f2f_url");
-			JSONObject json_recipe_title = (JSONObject) json_recipe.get("title");
-			JSONObject json_recipe_source_url = (JSONObject) json_recipe.get("source_url");
-			JSONObject json_recipe_recipe_id = (JSONObject) json_recipe.get("recipe_id");
-			JSONObject json_recipe_image_url = (JSONObject) json_recipe.get("image_url");
-			JSONObject json_recipe_social_rank = (JSONObject) json_recipe.get("social_rank");
-			JSONObject json_recipe_publisher_url = (JSONObject) json_recipe.get("publisher_url");
+			JSONObject json_recipe = (JSONObject) o;
+			
+			recipe.publisher = json_recipe.get("publisher").toString();
+			recipe.f2f_url = json_recipe.get("f2f_url").toString();
+			recipe.title = json_recipe.get("title").toString();
+			recipe.source_url = json_recipe.get("source_url").toString();
+			recipe.recipe_id = json_recipe.get("recipe_id").toString();
+			recipe.image_url = json_recipe.get("image_url").toString();
+			recipe.social_rank = json_recipe.get("social_rank").toString();
+			recipe.publisher_url= json_recipe.get("publisher_url").toString();
 
-			if (json_recipe_publisher.length() != 0) {
-			    recipe.publisher = json_recipe_publisher.get("$t").toString();
-			}
-			if (json_recipe_f2f_url.length() != 0) {
-			    recipe.f2f_url = json_recipe_f2f_url.get("$t").toString();
-			}
-			if (json_recipe_title.length() != 0) {
-			    recipe.title = json_recipe_title.get("$t").toString();
-			}
-			if (json_recipe_source_url.length() != 0) {
-			    recipe.source_url = json_recipe_source_url.get("$t").toString();
-			}
-			if (json_recipe_recipe_id.length() != 0) {
-			    recipe.recipe_id = json_recipe_recipe_id.get("$t").toString();
-			}
-			if (json_recipe_image_url.length() != 0) {
-			    recipe.image_url = json_recipe_image_url.get("$t").toString();
-			}
-			if (json_recipe_social_rank.length() != 0) {
-			    recipe.social_rank = json_recipe_social_rank.get("$t").toString();
-			}
-			if (json_recipe_publisher_url.length() != 0) {
-			    recipe.publisher_url= json_recipe_publisher_url.get("$t").toString();
-			}
-			recipes.add(recipe);
-		    }
-		    attributes.put("recipes", recipes);
-	    	    for (RecipeModel r :recipes) {	
-			//System.out.println("recipe name:" + r.title + "link: " + r.f2f_url);
-		    }
-		    return new ModelAndView(attributes, "sample.mustache");}, new MustacheTemplateEngine());
-*/	}
+			recipes.add(recipe); //add model to arrayList recipes
+		}
+		attributes.put("recipes", recipes); //add recipes to Map attributes
+
+		//sendn it all out
+		return new ModelAndView(attributes, "sample.mustache");}, new MustacheTemplateEngine());
+	}
+
 	public static int getHerokuAssignedPort() {
         	ProcessBuilder processBuilder = new ProcessBuilder();
         	if (processBuilder.environment().get("PORT") != null) {

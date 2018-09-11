@@ -117,14 +117,12 @@ public class MongoDB {
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }*/
 
-    static ArrayList<String> initDatabase(String uriString) {
-        ArrayList<String> dbQuery = new ArrayList<>();
+    static void initDatabase(String uriString) {
         try {
-            dbQuery = createDocument(uriString);
+             MongoDB.initCollection(uriString);
         } catch (UnknownHostException e) {
             System.out.println("Unknown Host thrown");
         }
-        return dbQuery;
     }
 
     static String makeString(ArrayList<String> text) {
@@ -140,73 +138,15 @@ public class MongoDB {
 	}
 
 
-    public static ArrayList<String> createDocument(String uriString) throws UnknownHostException {
-		
-        // Create seed data
-        Recipe re = new Recipe();
-	String name = "";
-	for(String s:ingredients)
-	{
-		Ingredient temp = new Ingredient(1,s);
-		re.add(temp);
-		name += s;
-	}
-	re.set_name(name);
-        List<Document> seedData = new ArrayList<Document>();
-	ArrayList<String> a = new ArrayList<String>();
-       	a.add("chicken");
-	a.add("rice");	
-	a.add("soy_sauce");
-        seedData.add(new Document("recipename","Chicken and Rice" )
-					 .append("ingredient", a)
-					 .append("ready","y")
-					 );
-	a.set(0,"beef");
-	a.set(1,"onion");
-	a.set(2,"pepper");
-        seedData.add(new Document("recipename", "beef soup")
-					 .append("ingredient", a)
-					 .append("ready","y")
-					 );
-	a.set(0,"rice");
-	a.set(0,"egg");
-	a.set(0,"carrot");
-        seedData.add(new Document("recipename", "fried rice")
-					 .append("ingredient", a)
-					 .append("ready","y")
-					 );
-
+    public static void initCollection (String uriString) throws UnknownHostException {
         MongoDatabase db = connect_database(uriString); //get database access
         MongoCollection<Document> songs = db.getCollection("recipes");
-//        songs.drop();
-        songs.insertMany(seedData);
-        Document findQuery = new Document("ready", "y");
-        MongoCursor<Document> cursor = songs.find(findQuery).iterator();
-        ArrayList<String> prettyQuery = new ArrayList<>();
-        try {
-                while (cursor.hasNext()) 
-		{
-               		Document doc = cursor.next();
-			String recipe = "The recipe is: "+ doc.get("recipename");
-			for(String s:(ArrayList<String>)(doc.get("ingredient")))
-			{
-				recipe += "Ingredient: ";
-				recipe += s;
-			}
-			prettyQuery.add(recipe);
-		}
-            }
-        finally 
-	{
-            cursor.close();
-        }
         
         // Only close the connection when your app is terminating
         
      //   client.close();
 	disconnect_database(uriString);
 		
-        return prettyQuery;
     }
     public static MongoDatabase connect_database(String uriString)
     {
@@ -287,10 +227,10 @@ public class MongoDB {
 		while (cursor.hasNext()) 
 		{
                		Document doc = cursor.next();
-			String recipe = "The recipe is: "+ doc.get("recipename");
+			String recipe = "the recipe is: "+ doc.get("recipename");
 			for(String s:(ArrayList<String>)(doc.get("ingredient")))
 			{
-				recipe += ("\nIngredient: " + s);
+				recipe += ("\ningredient: " + s);
 			}
 			result.add(recipe);
 		}
@@ -301,4 +241,37 @@ public class MongoDB {
 	}
 	return result;
     }
+
+    public static ArrayList<String> searchByIngredients(String uriString, String ingredients)
+    {
+	    /*
+	    MongoDatabase db = MongoDB.connect_database(uriString);
+	    MongoCollection<Document> songs = db.getCollection("recipes");
+	    ArrayList<String> result = new ArrayList<String>();
+	    ArrayList<String> i = (ArrayList<String>)(Arrays.asList(ingredients.split(","))); //make an arraylist of strins of the ingredients
+	    Document findQuery = new Document("ingredients", i);
+	    MongoCursor<Document> cursor = songs.find(findQuery).iterator();
+	    try
+	    {
+		    while (cursor.hasNext())
+		    {
+			    Document doc = cursor.next();
+			    String recipe = "the recipe is: "+ doc.get("recipename");
+			for(String s:(ArrayList<String>)(doc.get("ingredient")))
+			{
+				recipe += ("\ningredient: " + s);
+			}
+			result.add(recipe);
+		}
+	}
+	finally
+	{
+	    cursor.close();
+	}
+	return result;
+*/
+	    ArrayList<String> test = new ArrayList<String>("hello");
+	    return test;
+    }
+	    
 }

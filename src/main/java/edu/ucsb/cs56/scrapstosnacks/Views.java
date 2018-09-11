@@ -17,8 +17,8 @@ public class Views
 {
         public static void display_view(String uriString)
         {
-                ArrayList<String> recipes = MongoDB.display_all(uriString);
                 get("/display",(rq,rs) -> {
+                	ArrayList<String> recipes = MongoDB.display_all(uriString);
                         Map<String,Object> model = new HashMap<>();
 			model.put("recipes",recipes);
                         return new ModelAndView(model, "display.mustache");}, new MustacheTemplateEngine());
@@ -55,23 +55,49 @@ public class Views
 		HashMap model = new HashMap();
 		get("/search/recipes", (rq, rs) ->{
 			ArrayList<String> temp = MongoDB.searchByName(uriString,rq.queryParams("recipename"));
-			int count = 1;
-			String p = "recipe";
-			for(String s:temp)
-			{
-				String p_i = p+count;
-				model.put(p_i,s);
-				count++;
-			}
-		       return	new ModelAndView(model, "searchRecipes.mustache");}, new MustacheTemplateEngine());
+				int count = 1;
+				String p = "recipe";
+				for(String s:temp)
+				{
+					String p_i = p+count;
+					model.put(p_i,s);
+					count++;
+				}
+				return new ModelAndView(model, "searchRecipes.mustache");
+			}, new MustacheTemplateEngine());
 	}
 	public static void result_view_byName(String uriString)
 	{
 		get("/result/byname",(rq, rs) ->
+			{
+				Map<String,Object> model = new HashMap<>();
+				ArrayList<String> temp = MongoDB.searchByName(uriString,rq.queryParams("recipename"));
+				if (temp.size() !=0)
 				{
-					Map<String,Object> model = new HashMap<>();
-					model.put("recipes",MongoDB.searchByName(uriString,rq.queryParams("recipename")));
-				return new ModelAndView(model,"searchResultsByName.mustache");}, new MustacheTemplateEngine());
+					model.put("recipes",temp);
+					return new ModelAndView(model,"searchResults.mustache");
+				}
+				else
+					return new ModelAndView(model, "noResults.mustache");
+							
+				}, new MustacheTemplateEngine());
+	}
+
+	public static void result_view_byIngredients(String uriString)
+	{
+		get("/result/byingredients", (rq,rs) ->
+			{
+				Map<String,Object> model = new HashMap<>();
+				ArrayList<String> temp = MongoDB.searchByIngredients(uriString,rq.queryParams("ingredients"));
+				if (temp.size() !=0)
+				{
+					model.put("recipes",temp);
+					return new ModelAndView(model,"searchResults.mustache");
+				}
+				else
+					return new ModelAndView(model, "noResults.mustache");
+							
+				}, new MustacheTemplateEngine());
 	}
 
 }

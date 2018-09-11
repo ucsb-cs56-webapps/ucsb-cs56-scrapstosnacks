@@ -16,4 +16,25 @@ public class RecipeModel {
 	public String getTitle() {
 		return title;
 	}
+	public String getSourceURL() {
+		return title;
+	}
+	public String getRecipeID() {
+		return title;
+	}
+	public String getImageURL() {
+		return title;
+	}
+	public String getSocialRank() {
+		return title;
+	}
+	public String getPublisherURL() {
+		return title;
+	}
+
+
+
+
+
+
 }
