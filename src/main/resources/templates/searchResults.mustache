@@ -1,14 +1,53 @@
 <!DOCTYPE html>
 <html>
 {{> head }}
+
+<head>
+<style>
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+</style>
+</head>
+
+
 <body>
  {{> nav }}
  <h1>Search Results:</h1>
+ <h3> Recipes from our editable-database </h3>
 <p>
+
 {{#recipes}}
 {{.}}
 {{/recipes}}
 </p>
+
+<br><br>
+ <h3>Recipes from a restful API</h3>
+ {{#apirecipes}}
+ <div class="gallery">
+         Recipe Name: {{title}} <br>
+        <a href="{{f2f_url}}"><img src={{image_url}} width="300" height="200"></a>
+ </div>
+ {{/apirecipes}}
+
  {{> bootstrap-from-cdn-body }}
 </body>
 </html>

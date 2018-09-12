@@ -17,24 +17,36 @@ public class RecipeModel {
 		return title;
 	}
 	public String getSourceURL() {
-		return title;
+		return source_url;
 	}
 	public String getRecipeID() {
-		return title;
+		return recipe_id;
 	}
 	public String getImageURL() {
-		return title;
+		return image_url;
 	}
 	public String getSocialRank() {
-		return title;
+		return social_rank;
 	}
 	public String getPublisherURL() {
-		return title;
+		return publisher_url;
 	}
 
+    @Override
+    public String toString() {
+	String s = "";
 
+	s += f2f_url;
+	s += ", ";
+	s += title;
+	s += ", ";
+	s += source_url;
+	s += recipe_id;
+	s += image_url;
+	s += social_rank;
+	s += publisher_url;
 
-
-
+	return s;
+    }
 
 }
