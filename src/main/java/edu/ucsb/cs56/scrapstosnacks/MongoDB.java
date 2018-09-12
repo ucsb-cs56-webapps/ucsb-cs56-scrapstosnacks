@@ -209,7 +209,7 @@ public class MongoDB {
 		MongoDatabase db = MongoDB.connect_database(uriString);
 		MongoCollection<Document> songs = db.getCollection("recipes");
 		ArrayList<String> result = new ArrayList<String>();
-		List<String> i = Arrays.asList(ingredients.split("\\s,\\s"));
+		List<String> i = Arrays.asList(ingredients.split(","));
 		Document findQuery = new Document("ready", "y");
 		MongoCursor<Document> cursor = songs.find(findQuery).iterator();
 		try
@@ -223,6 +223,7 @@ public class MongoDB {
 				{
 					for(String s:(ArrayList<String>)(doc.get("ingredient")))
 					{
+						
 						if((i.get(k).equals(s)))
 						{
 							match_recipe = true;	

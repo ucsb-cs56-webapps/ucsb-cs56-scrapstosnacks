@@ -105,8 +105,8 @@ public class API{
 
 	public static ArrayList<RecipeModel> search_by_ingredients(String ingredients) {
 		ArrayList<RecipeModel> recipes = new ArrayList<>();
-		HashMap<String,String> envVars = MongoDB.getNeededEnvVars(new String []{"API_KEY"});
-		String key = envVars.get("API_KEY");
+		HashMap<String,String> envVars = MongoDB.getNeededEnvVars(new String []{"API_KEY1"});
+		String key = envVars.get("API_KEY1");
 		String urlString = "https://www.food2fork.com/api/search?key=" + key + "&q=" + ingredients + "";
 		System.out.println("apiURL=" + urlString);
 		return  API.get_recipes(urlString);
@@ -116,8 +116,8 @@ public class API{
 	public static ArrayList<RecipeModel> display_all(){
 
 		ArrayList<RecipeModel> recipes = new ArrayList<>();
-		HashMap<String,String> envVars = MongoDB.getNeededEnvVars(new String []{"API_KEY"});
-		String key = envVars.get("API_KEY");
+		HashMap<String,String> envVars = MongoDB.getNeededEnvVars(new String []{"API_KEY1"});
+		String key = envVars.get("API_KEY1");
 
 		String urlString = "https://www.food2fork.com/api/search?key=" + key +"";
 		

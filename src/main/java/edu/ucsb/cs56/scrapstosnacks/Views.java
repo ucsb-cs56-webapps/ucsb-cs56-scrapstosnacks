@@ -106,6 +106,7 @@ public class Views
 			}
 			else if (apiRecipes.size() !=0)
 			{
+				model.put("recipes",temp);
 				model.put("apirecipes", apiRecipes);
 				return new ModelAndView(model,"searchResults.mustache");
 
