@@ -8,6 +8,9 @@ https://scrapstosnacks.herokuapp.com/
 
 
 
+For our API we used https://food2fork.com 
+and for our database we used MONGODB
+
 
 We used the following tutorial to set up our database env vars keys, also displayed below:
 https://github.com/ucsb-cs56-pconrad/sparkjava-rest-mlab-frontend#getting-it-to-run-setting-up-envsh
@@ -107,34 +110,6 @@ So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
 
 ---
 
-
-
-
-For reference, our mongodb data and variables are these:
-```
-To connect to database using the mongo shell:
-%mongo ds020208.mlab.com:20208/scrapstosnacksdb -u <dbuser> -p <dbpassword>
-To connect using a driver via the standard MongoDB URI (what's this?):
-  mongodb://<dbuser>:<dbpassword>@ds020208.mlab.com:20208/scrapstosnacksdb
-```
-
-
-In the env.sh file:
-```
-#MongoDB KEYS
-export MONGODB_USER=scrapstosnacksuser
-export MONGODB_PASS=scrapstosnacks1
-export MONGODB_NAME=scrapstosnacksdb
-export MONGODB_HOST=ds020208.mlab.com
-export MONGODB_PORT=20208
-
-
-#FOOD2FORK KEY
-export API_KEY=70f769ead6ccca4ee94f8078390f9f7d
-
-#this is another key you can use if the first one runs out of API calls
-export API_KEY1=83fab007b63aaf5344a8a877f54c2c5b
-```
 
 
 Take note that we have keys for MongoDB and for the FOOD2FORK API. 
