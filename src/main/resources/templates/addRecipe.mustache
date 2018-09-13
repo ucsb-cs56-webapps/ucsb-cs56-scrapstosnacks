@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+{{> head }}
+<body>
+ {{> nav }}
+ <h1>Recipe Form</h1>
+
+<form action="/submitted" method="get">
+  Recipe Name:<br>
+  <input type="text" name="recipename" value="ex: Chicken and Rice">
+  <br> <br> <br>
+  Ingredient 1: <br>
+  <input type="text" name="ingredient1" value="chicken">
+  <br><br>
+  Ingredient 2: <br>
+  <input type="text" name="ingredient2" value="rice">
+  <br><br>
+  Ingredient 3: <br>
+  <input type="text" name="ingredient3" value="">
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+<p>When you click the "Submit" button, the form-data will be sent to our databse.
+</p>
+
+
+ {{> bootstrap-from-cdn-body }}
+</body>
+</html>

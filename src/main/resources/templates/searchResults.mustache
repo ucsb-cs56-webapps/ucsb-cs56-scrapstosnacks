@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 {{> head }}
+
 <head>
 <style>
 div.gallery {
@@ -26,28 +27,28 @@ div.desc {
 </style>
 </head>
 
+
 <body>
  {{> nav }}
- <h1>All Recipes</h1>
-
+ <h1>Search Results:</h1>
  <h3> Recipes from our editable-database </h3>
- <p>
- {{#dbrecipes}}<br>
- {{.}}
- {{/dbrecipes}}<br>
- 
+<p>
+
+{{#recipes}}
+{{.}}
+{{/recipes}}
 </p>
+
 <br><br>
  <h3>Recipes from a restful API</h3>
- {{#recipes}}
+ {{#apirecipes}}
  <div class="gallery">
-	 Recipe Name: {{title}} <br>
-	<a href="{{f2f_url}}"><img src={{image_url}} width="300" height="200"></a>
+         Recipe Name: {{title}} <br>
+        <a href="{{f2f_url}}"><img src={{image_url}} width="300" height="200"></a>
  </div>
- {{/recipes}}
-
-
+ {{/apirecipes}}
 
  {{> bootstrap-from-cdn-body }}
 </body>
 </html>
+
