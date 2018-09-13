@@ -3,9 +3,32 @@
 {{> head }}
 <body>
  {{> nav }}
- <h1>This is for searching the recipes, we need to add checkbox here</h1>
+ <h1>Search</h1>
+  <h3> This is for searching recipes by ingredients!</h3>
+  <p> When typing the ingredients, please separate each ingredient with a comma, no spaces. <br>
+<form action="/result/byingredients" method="get">
+  Search by ingredients:<br>
+  <input type="text" name="ingredients" value="chicken,rice">
+  <br><br>
+  <input type="submit" value="Submit">
+  <br><br>
 
-<p>Not implemented yet</p>
+ <h3>This is for searching our database recipes by name!</h3>
+ <p> When typing the name, please make sure the name is in the exact format in our database <br>
+<form action="/result/byname" method="get">
+  Search by recipe name:<br>
+  <input type="text" name="recipename" value="Chicken and Rice">
+  <br><br>
+  <input type="submit" value="Submit">
+  <br><br>
+</form>
+
+
+
+</form>
+
+
+</p>
 
  {{> bootstrap-from-cdn-body }}
 </body>
