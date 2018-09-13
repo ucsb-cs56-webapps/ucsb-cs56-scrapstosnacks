@@ -11,15 +11,20 @@ Also, gives recipes based the approximate time to prepare and whether it is brea
 SETTING UP DATABASE INSTRUCTIONS
 
 To connect using the mongo shell:
+
   mongo ds020208.mlab.com:20208/scrapstosnacksuser -u <dbuser> -p <dbpassword>
-To connect using a driver via the standard MongoDB URI (what's this?):
+	
+To connect using a driver via the standard MongoDB URI:
+
   mongodb://<dbuser>:<dbpassword>@ds020208.mlab.com:20208/scrapstosnacksuser
 
 
 Now, open up env.sh for editing. The first two lines say:
 
 export MONGODB_USER=scrapstosnacksuser
+
 export MONGODB_PASS=scrapstosnacks1
+
 DO NOT CHANGE THESE TO THE USERNAME AND PASSWORD YOU USED TO LOGIN TO mlab.com!!! These are a different user and password, that you are going to create right now in the mlab.com window.
 
 In your file, create a username (Literally using testuser is fine). For password, make up a good long random password, such as 8sfvlSFE13RGDG2. The longer and more random the better, because you are never going to have to remember or type in this password; You are going to enter it once in this file; then copy and paste it into MLab when you create the user/password, and then never have to type it again. Please DON'T literally use abcd1234 or 8sfvlSFE13RGDG2.
@@ -28,8 +33,11 @@ Type it in the env.sh file first. Then click the "Users" tab, and look over to t
 
 
 To connect using the mongo shell:
+
   mongo ds020208.mlab.com:20208/scrapstosnacksuser -u <dbuser> -p <dbpassword>
+	
 info:
+	
 MONGODB_NAME=scrapstosnacksdb
 	
 MONGODB_HOST=ds020208.mlab.com
