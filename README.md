@@ -31,8 +31,11 @@ To connect using the mongo shell:
   mongo ds020208.mlab.com:20208/scrapstosnacksuser -u <dbuser> -p <dbpassword>
 info:
 MONGODB_NAME=scrapstosnacksdb
+	
 MONGODB_HOST=ds020208.mlab.com
+
 MONGODB_PORT=20208
+
 Once you've made these edits, you need to type the following so that these environment variables take effect:
 . env.sh
 This sets up the environment variables that the Java code will read from.
@@ -48,9 +51,13 @@ Once you've done these steps, you should be able to run and not see the error me
 DATABASE FOR HEROKU INFO
 
 
-heroku  config:set MONGODB_USER=${MONGODB_USER} --app scrapstosnacks
+heroku  config:set MONGODB_USER=${MONGODB_USER} --app scrapstosnacks	
+
 heroku  config:set MONGODB_PASS=${MONGODB_PASS}	--app scrapstosnacks
+
 heroku  config:set MONGODB_NAME=${MONGODB_NAME}	--app scrapstosnacks
+
 heroku  config:set MONGODB_HOST=${MONGODB_HOST}	--app scrapstosnacks
+
 heroku  config:set MONGODB_PORT=${MONGODB_PORT}	--app scrapstosnacks
 
