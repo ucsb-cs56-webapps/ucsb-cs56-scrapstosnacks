@@ -35,10 +35,6 @@ import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Hello world!
- *
- */
 
 public class MongoDB {
 
@@ -74,7 +70,7 @@ public class MongoDB {
 	public static String mongoDBUri(HashMap<String,String> envVars) {
 
 		System.out.println("envVars=" + envVars);
-
+		//string will look like:
 		// mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
 		String uriString = "mongodb://" +
 			envVars.get("MONGODB_USER") + ":" +
