@@ -47,10 +47,10 @@ Once you've done these steps, you should be able to run and not see the error me
 
 DATABASE FOR HEROKU INFO
 
+
 heroku  config:set MONGODB_USER=${MONGODB_USER} --app scrapstosnacks
 heroku  config:set MONGODB_PASS=${MONGODB_PASS}	--app scrapstosnacks
 heroku  config:set MONGODB_NAME=${MONGODB_NAME}	--app scrapstosnacks
 heroku  config:set MONGODB_HOST=${MONGODB_HOST}	--app scrapstosnacks
 heroku  config:set MONGODB_PORT=${MONGODB_PORT}	--app scrapstosnacks
-
 
