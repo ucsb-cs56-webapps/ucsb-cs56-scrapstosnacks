@@ -1,6 +1,12 @@
 # ucsb-cs56-scrapstosnacks
 
-gives recipe suggestions based on ingredient input.
+Gives recipe suggestions based on ingredient input.
+Contains both a database and an API that contain recipes.
+
+Take a look at our website!
+https://scrapstosnacks.herokuapp.com/
+
+
 
 
 We used the following tutorial to set up our database env vars keys, also displayed below:
@@ -46,16 +52,20 @@ Edit the env.sh file. The values in it are just example values. You'll need to c
 
 Go to the mlab.com window and navigate to the page for your database. If you called it mlab-blog-demo, for example, that page will have the URL https://mlab.com/databases/mlab-blog-demo and it will information like this at the top (this is just an example)
 
+```
 To connect using the mongo shell:
   mongo ds143932.mlab.com:43932/cs56-m18-demo -u <dbuser> -p <dbpassword>
 To connect using a driver via the standard MongoDB URI (what's this?):
   mongodb://<dbuser>:<dbpassword>@ds143932.mlab.com:43932/cs56-m18-demo
 You should also see tabs for Collections, Users, Stats, Backups and Tools.
+```
 
 Now, open up env.sh for editing. The first two lines say:
 
+```
 export MONGODB_USER=testuser
 export MONGODB_PASS=abcd1234
+```
 
 DO NOT CHANGE THESE TO THE USERNAME AND PASSWORD YOU USED TO LOGIN TO mlab.com!!! These are a different user and password, that you are going to create right now in the mlab.com window.
 
@@ -67,13 +77,15 @@ Now, we'll move on to the other values in the env.sh file.
 
 For these values, you are going to find these on the Mlab screen for your database:
 
-For MONGODB_NAME change it from cs56-m18-demo to whatever the name of your database is (e.g. mlab-blog-demo)
-For MONGODB_HOST and MONGO_PORT find the thing that says:
+For `MONGODB_NAME` change it from `cs56-m18-demo` to whatever the name of your database is (e.g. mlab-blog-demo)
+For `MONGODB_HOST` and `MONGO_PORT` find the thing that says:
+
 ```
 To connect using the mongo shell:
   mongo ds144023.mlab.com:47245/cs56-m18-demo -u <dbuser> -p <dbpassword>
-In this example, MONGODB_HOST should be ds144023.mlab.com and MONGODB_PORT should be 47245.
 ```
+In this example, `MONGODB_HOST` should be `ds144023.mlab.com` and `MONGODB_PORT` should be `47245`.
+
 
 Once you've made these edits, you need to type the following so that these environment variables take effect:
 
@@ -86,24 +98,28 @@ While the previous steps 1-9 are "one time only" steps, this final step must be 
 
 Once you've done these steps, you should be able to run and not see the error message about defining environment variables.
 
+```
 Error: Must define env variable MONGODB_USER
 etc..
-So try doing mvn compile exec:java again, and visiting http://localhost:4567
+```
+So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
+
+
+---
 
 
 
 
-
-for reference, our mongodb data and variables are these:
-
+For reference, our mongodb data and variables are these:
+```
 To connect to database using the mongo shell:
 %mongo ds020208.mlab.com:20208/scrapstosnacksdb -u <dbuser> -p <dbpassword>
 To connect using a driver via the standard MongoDB URI (what's this?):
   mongodb://<dbuser>:<dbpassword>@ds020208.mlab.com:20208/scrapstosnacksdb
+```
 
 
-
-in the env.sh file:
+In the env.sh file:
 ```
 #MongoDB KEYS
 export MONGODB_USER=scrapstosnacksuser
@@ -121,5 +137,5 @@ export API_KEY1=83fab007b63aaf5344a8a877f54c2c5b
 ```
 
 
-take note that we have keys for MongoDB and for the FOOD2FORK API. 
+Take note that we have keys for MongoDB and for the FOOD2FORK API. 
 Both are applied in different areas but were both put into the env.sh file
