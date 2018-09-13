@@ -6,7 +6,7 @@ gives recipe suggestions based on ingredient input.
 We used the following tutorial to set up our database env vars keys, also displayed below:
 https://github.com/ucsb-cs56-pconrad/sparkjava-rest-mlab-frontend#getting-it-to-run-setting-up-envsh
 
-#H 1 Getting it to run: setting up env.sh
+# Getting it to run: setting up env.sh
 
 To run, the usual steps of `mvn compile exec:java` then visiting http://localhost:4567 are a good start.
 
