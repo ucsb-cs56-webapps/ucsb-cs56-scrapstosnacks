@@ -48,47 +48,15 @@ In the counters collection, create a document with exactly this content:
  "seq": 0
 }
 ```
-Keep your mlab.com window open; you'll need it. But now turn back to the command line where you cloned this repo. You'll see a file called env.sh.EXAMPLE. Copy it to env.sh
+Keep your mlab.com window open; you'll need it. But now turn back to the command line where you cloned this repo.
+MongoDBTutorial:https://github.com/ucsb-cs56-m18/sparkjava-mongodb-mlab-tutorial
+Go to the MongoDBTutorial and follow the instruction there and create the .env file.
 
-cp env.sh.EXAMPLE env.sh
 Edit the env.sh file. The values in it are just example values. You'll need to change them as indicated in the next steps. For each step, you'll get some piece of information from the mlab.com window, so arrange your windows side by side where you can see them both.
 
 Go to the mlab.com window and navigate to the page for your database. If you called it mlab-blog-demo, for example, that page will have the URL https://mlab.com/databases/mlab-blog-demo and it will information like this at the top (this is just an example)
 
-```
-To connect using the mongo shell:
-  mongo ds143932.mlab.com:43932/cs56-m18-demo -u <dbuser> -p <dbpassword>
-To connect using a driver via the standard MongoDB URI (what's this?):
-  mongodb://<dbuser>:<dbpassword>@ds143932.mlab.com:43932/cs56-m18-demo
-You should also see tabs for Collections, Users, Stats, Backups and Tools.
-```
-
-Now, open up env.sh for editing. The first two lines say:
-
-```
-export MONGODB_USER=testuser
-export MONGODB_PASS=abcd1234
-```
-
-DO NOT CHANGE THESE TO THE USERNAME AND PASSWORD YOU USED TO LOGIN TO mlab.com!!! These are a different user and password, that you are going to create right now in the mlab.com window.
-
-In your file, create a username (Literally using testuser is fine). For password, make up a good long random password, such as 8sfvlSFE13RGDG2. The longer and more random the better, because you are never going to have to remember or type in this password; You are going to enter it once in this file; then copy and paste it into MLab when you create the user/password, and then never have to type it again. Please DON'T literally use abcd1234 or 8sfvlSFE13RGDG2.
-
-Type it in the env.sh file first. Then click the "Users" tab, and look over to the right side of the screen for the "Add database user" button. Click it, and enter the username and password that you just created (e.g. testuser and 8sfvlSFE13RGDG2. You'll want to copy/paste the password since you have to type it twice.)
-
-Now, we'll move on to the other values in the env.sh file.
-
-For these values, you are going to find these on the Mlab screen for your database:
-
-For `MONGODB_NAME` change it from `cs56-m18-demo` to whatever the name of your database is (e.g. mlab-blog-demo)
-For `MONGODB_HOST` and `MONGO_PORT` find the thing that says:
-
-```
-To connect using the mongo shell:
-  mongo ds144023.mlab.com:47245/cs56-m18-demo -u <dbuser> -p <dbpassword>
-```
-In this example, `MONGODB_HOST` should be `ds144023.mlab.com` and `MONGODB_PORT` should be `47245`.
-
+create the heroku account and set up the env on the config Vars as exactly as what you did in the env file.
 
 Once you've made these edits, you need to type the following so that these environment variables take effect:
 
@@ -107,6 +75,11 @@ etc..
 ```
 So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
 
+MangoDB.java is basically all the functions for interacting with database
+View.java is for all the get and post functions.
+ScrapsToSnacksMain.java is for acutally calling the functions in View.
+API.java is for all the functions for interacting with API.
+
 
 ---
 
@@ -114,10 +87,3 @@ So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
 
 Take note that we have keys for MongoDB and for the FOOD2FORK API. 
 Both are applied in different areas but were both put into the env.sh file
-
-
-#Creating an API KEY
-
-To set up an API key with food2fork, simply click on the website. There should be a link that says "Join Food2Fork"
-Once you register with an emiail, you will be given an API key. 
-Please take note that you will only have 50 API calls per day if you want to use it for free.
