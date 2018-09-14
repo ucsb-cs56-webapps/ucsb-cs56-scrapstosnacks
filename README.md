@@ -108,7 +108,7 @@ This will allow our live webapp to access our database on mLab.
 
 
 
-Once you've done these steps, you should be able to run and not see the error message about defining environment variables.
+Once you've done these steps, you should be able to type `mvn package heroku:deploy`
 
 Take note: 
 
