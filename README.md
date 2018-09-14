@@ -114,3 +114,10 @@ So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
 
 Take note that we have keys for MongoDB and for the FOOD2FORK API. 
 Both are applied in different areas but were both put into the env.sh file
+
+
+#Creating an API KEY
+
+To set up an API key with food2fork, simply click on the website. There should be a link that says "Join Food2Fork"
+Once you register with an emiail, you will be given an API key. 
+Please take note that you will only have 50 API calls per day if you want to use it for free.
