@@ -108,7 +108,7 @@ This will allow our live webapp to access our database on mLab.
 
 
 
-Once you've done these steps, you should be able to type `mvn package heroku:deploy`
+Once you've done these steps, you should be able to run the local host. but make sure to change the 4567 to the new port from the mongo database
 
 Take note: 
 
