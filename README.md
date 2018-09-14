@@ -65,7 +65,7 @@ mongodb://<dbuser>:<dbpassword>@d<dbhost>/<dbname>
  YOUR DB USER AND DB PASS ARE NOT YOUR ACCOUNT USERNAME AND PASSWORD, THEY ARE THE USER THAT YOU CREATED WITHIN THE DATABASE
  
  
-#Creating environment variables locally
+# Creating environment variables locally
 
 Since we're going to be logging into a remote database, we have to hide our login credentials from the outside world. To do this, we're going to make a .env.sh file inside our project directory. It should have a structure similar to this.
 
