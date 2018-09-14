@@ -15,6 +15,8 @@ and for our database we used MONGODB
 We used the following tutorial to set up our database env vars keys, also displayed below:
 https://github.com/ucsb-cs56-pconrad/sparkjava-rest-mlab-frontend#getting-it-to-run-setting-up-envsh
 
+
+
 # Getting it to run: setting up env.sh
 
 To run, the usual steps of `mvn compile exec:java` then visiting http://localhost:4567 are a good start.
@@ -29,13 +31,20 @@ Error: Must define env variable MONGODB_PORT
 Phillips-Mac-mini:sparkjava-rest-mlab-frontend pconrad$ 
 ```
 
-To fix this, you need to take the following steps. Note that the steps involving mlab.com are pretty self-explanatory if you go to their website, so I'm not including much detail. You'll figure it out.
+YOU HAVE TO CREATE AN `env.sh`  FILE IN ORDER FOR THIS TO RUN.
+
+To fix this, you need to take the following steps. Note that the steps involving mlab.com are pretty self-explanatory if you go to their website, so I'm not including much detail. 
+
+We also used this website to set up our database
+MongoDBTutorial:https://github.com/ucsb-cs56-m18/sparkjava-mongodb-mlab-tutorial
 
 1. Create a free account at mlab.com
 
 2. Create a deployment on the free tier
 
 3. Create a database. Call it whatever you like; perhaps mlab-blog-demo for example.
+
+4. Create a user for that database
 
 In that database, create two collections, initially empty
 
@@ -48,64 +57,65 @@ In the counters collection, create a document with exactly this content:
  "seq": 0
 }
 ```
-Keep your mlab.com window open; you'll need it. But now turn back to the command line where you cloned this repo. You'll see a file called env.sh.EXAMPLE. Copy it to env.sh
 
-cp env.sh.EXAMPLE env.sh
-Edit the env.sh file. The values in it are just example values. You'll need to change them as indicated in the next steps. For each step, you'll get some piece of information from the mlab.com window, so arrange your windows side by side where you can see them both.
 
-Go to the mlab.com window and navigate to the page for your database. If you called it mlab-blog-demo, for example, that page will have the URL https://mlab.com/databases/mlab-blog-demo and it will information like this at the top (this is just an example)
+Take note of the user credentials your just made, your db name, and host
+mongodb://<dbuser>:<dbpassword>@d<dbhost>/<dbname>
+ 
+ YOUR DB USER AND DB PASS ARE NOT YOUR ACCOUNT USERNAME AND PASSWORD, THEY ARE THE USER THAT YOU CREATED WITHIN THE DATABASE
+ 
+ 
+# Creating environment variables locally
 
+Since we're going to be logging into a remote database, we have to hide our login credentials from the outside world. To do this, we're going to make a .env.sh file inside our project directory. It should have a structure similar to this.
+
+export USER_=your user's username
+export PASS_=your user's password
+export DB_NAME_=your db name
+export HOST_=your host name // should be something with mlab in it...
+
+also include the API key in this file unders something like
+
+export API_KEY=whatever the api key is
+
+!!! IMPORTANT !!!
+
+Make sure to run the following to add .env to your .gitignore! This way our secret credentials won't be pushed into our GitHub repos.
 ```
-To connect using the mongo shell:
-  mongo ds143932.mlab.com:43932/cs56-m18-demo -u <dbuser> -p <dbpassword>
-To connect using a driver via the standard MongoDB URI (what's this?):
-  mongodb://<dbuser>:<dbpassword>@ds143932.mlab.com:43932/cs56-m18-demo
-You should also see tabs for Collections, Users, Stats, Backups and Tools.
+echo ".env.sh" >> .gitignore
 ```
-
-Now, open up env.sh for editing. The first two lines say:
-
-```
-export MONGODB_USER=testuser
-export MONGODB_PASS=abcd1234
-```
-
-DO NOT CHANGE THESE TO THE USERNAME AND PASSWORD YOU USED TO LOGIN TO mlab.com!!! These are a different user and password, that you are going to create right now in the mlab.com window.
-
-In your file, create a username (Literally using testuser is fine). For password, make up a good long random password, such as 8sfvlSFE13RGDG2. The longer and more random the better, because you are never going to have to remember or type in this password; You are going to enter it once in this file; then copy and paste it into MLab when you create the user/password, and then never have to type it again. Please DON'T literally use abcd1234 or 8sfvlSFE13RGDG2.
-
-Type it in the env.sh file first. Then click the "Users" tab, and look over to the right side of the screen for the "Add database user" button. Click it, and enter the username and password that you just created (e.g. testuser and 8sfvlSFE13RGDG2. You'll want to copy/paste the password since you have to type it twice.)
-
-Now, we'll move on to the other values in the env.sh file.
-
-For these values, you are going to find these on the Mlab screen for your database:
-
-For `MONGODB_NAME` change it from `cs56-m18-demo` to whatever the name of your database is (e.g. mlab-blog-demo)
-For `MONGODB_HOST` and `MONGO_PORT` find the thing that says:
-
-```
-To connect using the mongo shell:
-  mongo ds144023.mlab.com:47245/cs56-m18-demo -u <dbuser> -p <dbpassword>
-```
-In this example, `MONGODB_HOST` should be `ds144023.mlab.com` and `MONGODB_PORT` should be `47245`.
-
-
 Once you've made these edits, you need to type the following so that these environment variables take effect:
 
 ```
 . env.sh
 ```
-This sets up the environment variables that the Java code will read from.
+While the previous steps are "one time only" steps, this final step must be done each time you log in to a term Unix terminal session; the environment variable are defined as part of the current process.
 
-While the previous steps 1-9 are "one time only" steps, this final step must be done each time you log in to a term Unix terminal session; the environment variable are defined as part of the current process.
 
-Once you've done these steps, you should be able to run and not see the error message about defining environment variables.
+#Creating config variables on heroku
 
-```
-Error: Must define env variable MONGODB_USER
-etc..
-```
-So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
+create a heroku account and a heroku project
+Go to your dashboard https://dashboard.heroku.com/apps/<project-name>/settings
+Click on Settings
+Click Reveal Config Vars inside the Config Vars menu
+Input your key value pairs for your config variables in the same way as the environment variables
+USER_        username
+.
+.
+.
+This will allow our live webapp to access our database on mLab.
+
+
+
+
+Once you've done these steps, you should be able to run the local host. but make sure to change the 4567 to the new port from the mongo database
+
+Take note: 
+
+MongoDB.java is basically all the functions for interacting with database
+View.java is for all the get and post functions.
+ScrapsToSnacksMain.java is for acutally calling the functions in View.
+API.java is for all the functions for interacting with API.
 
 
 ---
@@ -114,3 +124,6 @@ So try doing `mvn compile exec:java` again, and visiting http://localhost:4567
 
 Take note that we have keys for MongoDB and for the FOOD2FORK API. 
 Both are applied in different areas but were both put into the env.sh file
+
+
+
